@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String   @id @default(uuid())
+  name       String   @db.VarChar(200)
+  last_name  String   @db.VarChar(200)
+  email      String   @db.VarChar(200) @unique
+  admin      Boolean  @default(false)
+  active     Boolean  @default(true)
+  created_at DateTime @default(now())
+  Inventory  Inventory[]
+
+  @@map("user")
+}
+
+model Product {
+  id         String   @id @default(uuid())
+  name       String   @db.VarChar(200)
+  bar_code   String   @db.VarChar(200)
+  quantity   Int      @db.Integer
+  active     Boolean  @default(true)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  CatSub     CatSub[]
+
+  @@map("product")
+}
+
+model Category {
+  id     String @id @default(uuid())
+  name   String @db.VarChar(200)
+  CatSub CatSub[]
+  @@map("category")
+
+}
+
+model SubCategory {
+  id     String @id @default(uuid())
+  name   String @db.VarChar(200)
+  CatSub CatSub[]
+  @@map("subcategory")
+
+}
+
+model CatSub {
+  id           String      @id @default(uuid())
+  cat_id       String
+  category     Category    @relation(fields: [cat_id], references: [id])
+  sub_id       String
+  sub_category SubCategory @relation(fields: [sub_id], references: [id])
+  product      Product     @relation(fields: [product_id], references: [id])
+  product_id   String
+
+  @@map("catsub")
+}
+
+model Inventory {
+  id           String @id @default(uuid())
+  owner_id     String
+  owner        User   @relation(fields: [owner_id], references: [id])
+  product_list Json
+
+  @@map("inventory")
+}
+
+
