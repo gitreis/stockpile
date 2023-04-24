@@ -14,8 +14,10 @@ export class CreateUserDto {
   email: string;
 
   @IsBoolean()
+  @IsNotEmpty()
   admin: boolean;
 
   @IsBoolean()
+  @IsNotEmpty()
   active: boolean;
 }
