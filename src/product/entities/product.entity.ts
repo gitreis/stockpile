@@ -1,4 +1,4 @@
-import { Product } from '@prisma/client';
+import { CatSub, Product } from '@prisma/client';
 
 export class ProductEntity implements Product {
   id: string;
@@ -6,6 +6,7 @@ export class ProductEntity implements Product {
   bar_code: string;
   quantity: number;
   active: boolean;
+  category?: CatSub;
   created_at: Date;
   updated_at: Date;
 }

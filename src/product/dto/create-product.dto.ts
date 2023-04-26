@@ -1,3 +1,4 @@
+import { CatSub } from '@prisma/client';
 import { IsBoolean, IsInt, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateProductDto {
@@ -16,4 +17,6 @@ export class CreateProductDto {
   @IsBoolean()
   @IsNotEmpty()
   active: boolean;
+
+  category: CatSub;
 }

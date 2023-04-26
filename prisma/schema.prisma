@@ -26,9 +26,9 @@ model Product {
   bar_code   String   @db.VarChar(200)
   quantity   Int      @db.Integer
   active     Boolean  @default(true)
+  category   CatSub   @relation(fields: [id], references: [id])
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
-  CatSub     CatSub[]
 
   @@map("product")
 }
@@ -36,15 +36,18 @@ model Product {
 model Category {
   id     String @id @default(uuid())
   name   String @db.VarChar(200)
+  SubCat SubCategory[]
   CatSub CatSub[]
-  @@map("category")
 
+  @@map("category")
 }
 
 model SubCategory {
   id     String @id @default(uuid())
   name   String @db.VarChar(200)
+  Category Category @relation(fields: [id], references: [id])
   CatSub CatSub[]
+
   @@map("subcategory")
 
 }
@@ -55,8 +58,7 @@ model CatSub {
   category     Category    @relation(fields: [cat_id], references: [id])
   sub_id       String
   sub_category SubCategory @relation(fields: [sub_id], references: [id])
-  product      Product     @relation(fields: [product_id], references: [id])
-  product_id   String
+  Product      Product[]
 
   @@map("catsub")
 }
