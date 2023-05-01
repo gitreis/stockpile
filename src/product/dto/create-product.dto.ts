@@ -18,5 +18,5 @@ export class CreateProductDto {
   @IsNotEmpty()
   active: boolean;
 
-  category: CatSub;
+  category?: CatSub;
 }

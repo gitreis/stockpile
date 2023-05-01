@@ -3,6 +3,8 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserRepository } from './repositories/user.repository';
+import { NotFoundError } from 'src/common/types/NotFoundError';
+import { UserEntity } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
@@ -15,8 +17,12 @@ export class UserService {
     return this.repository.findAll();
   }
 
-  findOne(id: string) {
-    return this.repository.findOne(id);
+  async findOne(id: string): Promise<UserEntity> {
+    const user = await this.repository.findOne(id);
+    if (!user) {
+      throw new NotFoundError('Usuário não encontrado.');
+    }
+    return user;
   }
 
   update(id: string, updateUserDto: UpdateUserDto) {

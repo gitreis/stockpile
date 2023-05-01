@@ -1,14 +1,13 @@
 import { Prisma } from '@prisma/client';
-import { IsJSON, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsJSON, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateInventoryDto {
   @IsString()
   @IsNotEmpty()
   id: string;
 
-  @IsString()
-  @IsNotEmpty()
-  owner_id: string;
+  @IsEmail()
+  owner_email: string;
 
   @IsJSON()
   @IsNotEmpty()
