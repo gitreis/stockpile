@@ -30,18 +30,18 @@ export class SubCategoryRepository {
 
   async update(
     id: string,
-    updateProductDto: UpdateSubcategoryDto,
+    updateSubCategoryDto: UpdateSubcategoryDto,
   ): Promise<SubCategoryEntity> {
-    return this.prisma.product.update({
+    return this.prisma.subCategory.update({
       where: {
         id,
       },
-      data: updateProductDto,
+      data: updateSubCategoryDto,
     });
   }
 
   async remove(id: string): Promise<SubCategoryEntity> {
-    return this.prisma.product.delete({
+    return this.prisma.subCategory.delete({
       where: {
         id,
       },

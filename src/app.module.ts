@@ -9,14 +9,7 @@ import { SubcategoryModule } from './subcategory/subcategory.module';
 import { InventoryModule } from './inventory/inventory.module';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot(),
-    UserModule,
-    ProductModule,
-    CategoryModule,
-    SubcategoryModule,
-    InventoryModule,
-  ],
+  imports: [ConfigModule.forRoot()],
   controllers: [AppController],
   providers: [AppService],
 })

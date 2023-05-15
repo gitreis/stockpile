@@ -1,26 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { CreateSubcategoryDto } from './dto/create-subcategory.dto';
 import { UpdateSubcategoryDto } from './dto/update-subcategory.dto';
+import { SubCategoryRepository } from './repositories/subcategory.repository';
+import { NotFoundError } from 'src/common/types/NotFoundError';
+import { SubCategoryEntity } from './entities/subcategory.entity';
 
 @Injectable()
-export class SubcategoryService {
-  create(createSubcategoryDto: CreateSubcategoryDto) {
-    return 'This action adds a new subcategory';
+export class SubCategoryService {
+  constructor(private readonly repository: SubCategoryRepository) {}
+  create(createSubCategroyDto: CreateSubcategoryDto) {
+    return this.repository.create(createSubCategroyDto);
   }
 
   findAll() {
-    return `This action returns all subcategory`;
+    return this.repository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} subcategory`;
+  async findOne(id: string): Promise<SubCategoryEntity> {
+    const subcat = await this.repository.findOne(id);
+    if (!subcat) {
+      throw new NotFoundError('Subcategoria não encontrado.');
+    }
+    return subcat;
   }
 
-  update(id: number, updateSubcategoryDto: UpdateSubcategoryDto) {
-    return `This action updates a #${id} subcategory`;
+  update(id: string, updateSubCategroyDto: UpdateSubcategoryDto) {
+    return this.repository.update(id, updateSubCategroyDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} subcategory`;
+  remove(id: string) {
+    return this.repository.remove(id);
   }
 }

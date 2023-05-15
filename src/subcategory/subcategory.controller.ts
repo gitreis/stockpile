@@ -7,13 +7,13 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { SubcategoryService } from './subcategory.service';
+import { SubCategoryService } from './subcategory.service';
 import { CreateSubcategoryDto } from './dto/create-subcategory.dto';
 import { UpdateSubcategoryDto } from './dto/update-subcategory.dto';
 
 @Controller('subcategory')
 export class SubcategoryController {
-  constructor(private readonly subcategoryService: SubcategoryService) {}
+  constructor(private readonly subcategoryService: SubCategoryService) {}
 
   @Post()
   create(@Body() createSubcategoryDto: CreateSubcategoryDto) {
@@ -27,7 +27,7 @@ export class SubcategoryController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.subcategoryService.findOne(+id);
+    return this.subcategoryService.findOne(id);
   }
 
   @Patch(':id')
@@ -35,11 +35,11 @@ export class SubcategoryController {
     @Param('id') id: string,
     @Body() updateSubcategoryDto: UpdateSubcategoryDto,
   ) {
-    return this.subcategoryService.update(+id, updateSubcategoryDto);
+    return this.subcategoryService.update(id, updateSubcategoryDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.subcategoryService.remove(+id);
+    return this.subcategoryService.remove(id);
   }
 }

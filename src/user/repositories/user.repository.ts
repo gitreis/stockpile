@@ -27,6 +27,14 @@ export class UserRepository {
     });
   }
 
+  findEmail(email: string): Promise<UserEntity> {
+    return this.prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+  }
+
   async update(id: string, updateUserDto: UpdateUserDto): Promise<UserEntity> {
     return this.prisma.user.update({
       where: {

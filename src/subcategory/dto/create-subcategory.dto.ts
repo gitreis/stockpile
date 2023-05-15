@@ -1,4 +1,3 @@
-import { Category } from '@prisma/client';
 import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateSubcategoryDto {
@@ -6,6 +5,5 @@ export class CreateSubcategoryDto {
   @IsNotEmpty()
   name: string;
 
-  @IsNotEmpty()
-  category: Category;
+  cat_id: string;
 }

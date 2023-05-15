@@ -15,7 +15,7 @@ model User {
   admin      Boolean  @default(false)
   active     Boolean  @default(true)
   created_at DateTime @default(now())
-  Inventory  Inventory[]
+  Invetory   Inventory?
 
   @@map("user")
 }
@@ -26,50 +26,36 @@ model Product {
   bar_code   String   @db.VarChar(200)
   quantity   Int      @db.Integer
   active     Boolean  @default(true)
-  category   CatSub   @relation(fields: [id], references: [id])
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
+  Category   Category?
 
   @@map("product")
 }
 
 model Category {
-  id     String @id @default(uuid())
-  name   String @db.VarChar(200)
-  SubCat SubCategory[]
-  CatSub CatSub[]
+  id      String @id @default(uuid())
+  prod_id Product @relation(fields: [id], references: [id])
+  name    String @db.VarChar(200)
+  SubCat  SubCategory[]
 
   @@map("category")
 }
 
 model SubCategory {
-  id     String @id @default(uuid())
-  name   String @db.VarChar(200)
-  Category Category @relation(fields: [id], references: [id])
-  CatSub CatSub[]
+  id       String @id @default(uuid())
+  name     String @db.VarChar(200)
+  cat_id   String
+  Category Category @relation(fields: [cat_id], references: [id])
 
   @@map("subcategory")
 
 }
 
-model CatSub {
-  id           String      @id @default(uuid())
-  cat_id       String
-  category     Category    @relation(fields: [cat_id], references: [id])
-  sub_id       String
-  sub_category SubCategory @relation(fields: [sub_id], references: [id])
-  Product      Product[]
-
-  @@map("catsub")
-}
-
 model Inventory {
-  id           String @id @default(uuid())
-  owner_id     String
-  owner        User   @relation(fields: [owner_id], references: [id])
-  product_list Json
+  user_email   String @db.VarChar(200) @unique
+  email        User   @relation(fields: [user_email], references: [email])
+  product_list String[]
 
   @@map("inventory")
 }
-
-
