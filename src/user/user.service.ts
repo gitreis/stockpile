@@ -25,8 +25,12 @@ export class UserService {
     return user;
   }
 
-  update(id: string, updateUserDto: UpdateUserDto) {
-    return this.repository.update(id, updateUserDto);
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    const user = await this.repository.update(id, updateUserDto);
+    if (!user) {
+      throw new NotFoundError('Falha ao atualizar.');
+    }
+    return user;
   }
 
   remove(id: string) {
